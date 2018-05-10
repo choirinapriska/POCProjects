@@ -6,12 +6,14 @@ function  [Q1,Q2,Q3,Q4] = getCoordinate(list,n,frame)
 
    cur_y = 1:n;
    rep_y = f:-1:-f;
-   
+ 
    data = list;
 
    dataA = rep_x(cur_x(data(:,:,5)));
    dataB = rep_y(cur_y(data(:,:,6)));
    
+   disp(dataA);
+   disp(dataB);
    a = 1;
    b = 1;
    c = 1;
@@ -37,10 +39,9 @@ function  [Q1,Q2,Q3,Q4] = getCoordinate(list,n,frame)
            if (X == 0 && Y ==0 )
            else
                 if X >= 0 && Y >= 0 || tetha >= 0 && tetha < 90
-%                     'Blok X' 'Blok Y' 'Koordinat X' 'Koordinat Y' 'Tetha' 'Magnitude' 'Label'
                    Q1(a,:) = {i j X Y tetha magnitude 'Q1'};
 %                    Q1 = cell2table(Q1(a,:),'VariableNames',header);
-                   disp(Q1)
+              
                    a = a +1;
                 elseif X <= 0 && Y >= 0 || tetha >= 90 && tetha < 180
                    Q2(b,:) = {i j X Y tetha magnitude 'Q2'};
