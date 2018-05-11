@@ -12,8 +12,6 @@ function  [Q1,Q2,Q3,Q4] = getCoordinate(list,n,frame)
    dataA = rep_x(cur_x(data(:,:,5)));
    dataB = rep_y(cur_y(data(:,:,6)));
    
-   disp(dataA);
-   disp(dataB);
    a = 1;
    b = 1;
    c = 1;
@@ -31,34 +29,41 @@ function  [Q1,Q2,Q3,Q4] = getCoordinate(list,n,frame)
            X = single(dataA(i,j));
            Y = single(dataB(i,j));
            
-           tetha = atan2(X,Y)*180/3.14;
+           tetha = atan2d(Y,X) + 360*(Y<0);
            
            magnitude = (X * X) + (Y * Y) ;
            magnitude = sqrt(magnitude);
            
            if (X == 0 && Y ==0 )
            else
-                if X >= 0 && Y >= 0 || tetha >= 0 && tetha < 90
-                   Q1(a,:) = {i j X Y tetha magnitude 'Q1'};
-%                    Q1 = cell2table(Q1(a,:),'VariableNames',header);
-              
+                if (tetha >= 0 && tetha < 90)
+                   Q1(a,:) = {i j X Y tetha magnitude 'Q1'};   
                    a = a +1;
-                elseif X <= 0 && Y >= 0 || tetha >= 90 && tetha < 180
-                   Q2(b,:) = {i j X Y tetha magnitude 'Q2'};
-%                    Q2 = cell2table(Q2,'VariableNames',header);
-                   
+                elseif (tetha >= 90 && tetha < 180)
+                   Q2(b,:) = {i j X Y tetha magnitude 'Q2'};  
                    b = b +1;
-                elseif X <= 0 && Y <= 0 || tetha >= 180 && tetha < 270
-                   Q3(c,:) = {i j X Y tetha magnitude 'Q3'};
-%                    Q3 = cell2table(Q3,'VariableNames',header);
-                   
+                elseif (tetha >= 180 && tetha < 270)
+                   Q3(c,:) = {i j X Y tetha magnitude 'Q3'};  
                    c =c +1;
-                elseif X >= 0 && Y <= 0 || tetha >= 270 && tetha <= 360
-                   Q4(d,:) = {i j X Y tetha magnitude 'Q4'};
-%                    Q4 = cell2table(Q4,'VariableNames',header);
-                   
-                   d = d +1;
+                elseif (tetha >= 270 && tetha <= 360)
+                   Q4(d,:) = {i j X Y tetha magnitude 'Q4'};  
+                   d = d +1; 
                 end 
+%                 if X >= 0 || Y >= 0 || tetha > 0 && tetha < 90
+%                    Q1(a,:) = {i j X Y tetha magnitude 'Q1'};  
+%                    a = a +1;
+%                 elseif X <= 0 && Y >= 0 || tetha >= 90 && tetha < 180
+%                    Q2(b,:) = {i j X Y tetha magnitude 'Q2'}; 
+%                    
+%                    b = b +1;
+%                 elseif X <= 0 && Y <= 0 || tetha >= 180 && tetha < 270
+%                    Q3(c,:) = {i j X Y tetha magnitude 'Q3'}; 
+%                    
+%                    c =c +1;
+%                 elseif X >= 0 && Y <= 0 || tetha >= 270 && tetha <= 360
+%                    Q4(d,:) = {i j X Y tetha magnitude 'Q4'};  
+%                    d = d +1;
+%                 end 
                 
            end 
        end

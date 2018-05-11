@@ -36,7 +36,7 @@ labelName = {'HAPPINESS'};
 tipeFeat   = catTipe{7}; % type feature
 is_show    = 'off'; % set figure on or off
 
-fold = '../test_images/sequence/DATATEST/';
+fold = '../test_images/sequence/datatest/';
 com        = 1; 
 block      = 9; 
 
@@ -102,7 +102,7 @@ for mn = 1: length(labelName)
 
                     save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'output-' catTipe{tp} '.mat'  ],'output');
                     
-                    disp(['=========================' num2str(frame) '===============================']);
+%                     disp(['=========================' num2str(frame) '===============================']);
                 end
 
                 mkdir(['../Result/'  label '/' labelDir(fdd).name '/' catTipe{tp} '/']);
@@ -114,10 +114,10 @@ for mn = 1: length(labelName)
                 
                 disp(['=========================' catTipe{tp} '===============================']);
  
-%                 save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q1.mat'  ],'Q1');
-%                 save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q2.mat'  ],'Q2');
-%                 save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q3.mat'  ],'Q3');
-%                 save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q4.mat'  ],'Q4'); 
+                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q1.mat'  ],'Q1');
+                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q2.mat'  ],'Q2');
+                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q3.mat'  ],'Q3');
+                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q4.mat'  ],'Q4'); 
 
                  
             end
