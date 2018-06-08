@@ -22,8 +22,8 @@ load(fitting_model);
 FD      = vision.CascadeObjectDetector();
 catTipe = {'AlisKiri' 'AlisKanan' 'MataKiri' 'MataKanan' 'Mulut' 'Dahi' 'All'};
 locFig  = {'northwest' 'north' 'northeast' 'southwest' 'south' 'southeast'};
-labelName = {'DISGUST','HAPPINESS','SADNESS','SURPRISE'};
-% labelName = {'HAPPINESS'};
+% labelName = {'DISGUST','HAPPINESS','SADNESS','SURPRISE'};
+labelName = {'HAPPINESS'};
 % % INPUT USER
 
 % catTipe{1} = AlisKiri
@@ -38,7 +38,7 @@ is_show    = 'off'; % set figure on or off
 
 fold = '../test_images/sequence/DATATEST/';
 com        = 1; 
-block      = 9; 
+block      = 13; 
 
 for mn = 1: length(labelName)
     label      = labelName{mn}; % label for dataset
@@ -46,7 +46,7 @@ for mn = 1: length(labelName)
     
     for fdd = 3: length(labelDir)
         nFold      = [fold label '/' labelDir(fdd).name '/'];
-        disp(nFold);
+     
         imFol       = dir(fullfile(nFold,'*.jpg'));
         imFol       = natsortfiles({imFol.name});
         sMax       = size(imFol,2);
@@ -105,7 +105,7 @@ for mn = 1: length(labelName)
 %                     disp(['=========================' num2str(frame) '===============================']);
                 end
 
-                mkdir(['../Result2/'  label '/' labelDir(fdd).name '/' catTipe{tp} '/']);
+                mkdir(['../Result/'  label '/' labelDir(fdd).name '/' catTipe{tp} '/']);
 
                 Q1 = transpose(Q1);
                 Q2 = transpose(Q2);
@@ -114,10 +114,10 @@ for mn = 1: length(labelName)
                 
                 disp(['=========================' catTipe{tp} '===============================']);
  
-                save(['../Result2/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q1.mat'  ],'Q1');
-                save(['../Result2/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q2.mat'  ],'Q2');
-                save(['../Result2/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q3.mat'  ],'Q3');
-                save(['../Result2/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q4.mat'  ],'Q4'); 
+                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q1.mat'  ],'Q1');
+                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q2.mat'  ],'Q2');
+                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q3.mat'  ],'Q3');
+                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q4.mat'  ],'Q4'); 
 
                  
             end

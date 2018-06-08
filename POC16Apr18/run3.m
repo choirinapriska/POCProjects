@@ -30,7 +30,7 @@
 % 
 
 
-list = output{5};
+list = output{1};
 n = 9;
 
 f = int16(n/2)-1;
@@ -72,24 +72,7 @@ f = int16(n/2)-1;
            
            magnitude = (X * X) + (Y * Y) ;
            magnitude = sqrt(magnitude);
-           
-           label = '';
-           
-%             if (X == 0 && Y ==0 )
-%                else
-%                     if X >= 0 && Y >= 0 || tetha >= 0 && tetha < 90
-%                       disp('Q1');
-%                     elseif X <= 0 && Y >= 0 || tetha >= 90 && tetha < 180
-%                         disp('Q2');
-%                     elseif X <= 0 && Y <= 0 || tetha >= 180 && tetha < 270
-%                       disp('Q3');
-%                     elseif X >= 0 && Y <= 0 || tetha >= 270 && tetha <= 360
-%                        disp('Q4');
-%                     end 
-%        end
-
-
-           
+                      
            if (X == 0 && Y ==0 )
            else
                

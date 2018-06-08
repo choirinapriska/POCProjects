@@ -36,93 +36,80 @@ labelName = {'HAPPINESS'};
 tipeFeat   = catTipe{7}; % type feature
 is_show    = 'off'; % set figure on or off
 
-fold = '../test_images/sequence/datatest/';
+fold = '../test_images/sequence/datatest/HAPPINESS/01_EP02_01f/';
 com        = 1; 
-block      = 9; 
-
-for mn = 1: length(labelName)
-    label      = labelName{mn}; % label for dataset
-    labelDir   = dir([fold label '/']); 
-    
-    for fdd = 3: length(labelDir)
-        nFold      = [fold label '/' labelDir(fdd).name '/'];
-        disp(nFold);
-        imFol       = dir(fullfile(nFold,'*.jpg'));
-        imFol       = natsortfiles({imFol.name});
-        sMax       = size(imFol,2);
-    %     nmFoldRes  = ['../results/sequence/' nmFold];
-    %     disp('Get Data.........');
-        disp(nFold);
-        if(sMax > 0)
-            for tp = 1: length(catTipe)-1
-                for frame = 1: numel(imFol)-1
-                    % % name file
-                    nameFile1 = [nFold imFol{com}];
-                    nameFile2 = [nFold imFol{frame+1}];
-
-                    % % Load Image
-                    img0 = imread(nameFile1);
-                    img1 = imread(nameFile2);
-
-
-                    if frame == 1
-                         bbox = step(FD, img0);
-                    else
-                         bbox = [bbox(1),bbox(2),bbox(3),bbox(4)];
-                    end
-
-                    img0  = imcrop(img0, bbox);
-                    img1  = imcrop(img1, bbox);
-
-                    [input0, init0] = getLandmark(img0,refShape,[0,0,bbox(3),bbox(4)]);
-                    [input1, init1] = getLandmark(img1,refShape,[0,0,bbox(3),bbox(4)]);
-
-                    MaxIter=6;
-
-                    if frame == 1 
-                         points = Fitting(input0,init0,RegMat,MaxIter);
-                    else
-                         points = [points(:,1), points(:,2)];
-                    end
-
-                    [imgFeature0,bboxFeat0] = getFeaturesFace(points,input0,catTipe{tp});
-                    [imgFeature1,bboxFeat1] = getFeaturesFace(points,input1,catTipe{tp});    
-
-                    numCat = size(catTipe,2)-1;  
-
-                    w = figure('Name', num2str(tipeFeat),'visible',is_show);
-                    movegui(w,locFig{1});
-
-                    header = {'Frame' ['Rx' tipeFeat] ['Ry' tipeFeat] ['R' tipeFeat] ['Teta' tipeFeat] ['Sum' tipeFeat] ['Label' tipeFeat]};
-                    sName{1,1} = tipeFeat;
-
-                    [poc{frame},output{frame}]  = getPOC(imgFeature0, imgFeature1,block);
-                    [Q1{frame},Q2{frame},Q3{frame},Q4{frame}]=getCoordinate(output{frame},block,frame);
-                    quiv(frame,7:7) = {label};
-
-                    save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'output-' catTipe{tp} '.mat'  ],'output');
-                    
-%                     disp(['=========================' num2str(frame) '===============================']);
-                end
-
-                mkdir(['../Result/'  label '/' labelDir(fdd).name '/' catTipe{tp} '/']);
-
-                Q1 = transpose(Q1);
-                Q2 = transpose(Q2);
-                Q3 = transpose(Q3);
-                Q4 = transpose(Q4);
-                
-                disp(['=========================' catTipe{tp} '===============================']);
+block      = 13; 
  
-                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q1.mat'  ],'Q1');
-                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q2.mat'  ],'Q2');
-                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q3.mat'  ],'Q3');
-                save(['../Result/' label '/' labelDir(fdd).name '/' catTipe{tp} '/' 'Q4.mat'  ],'Q4'); 
+disp(fold);
+imFol       = dir(fullfile(fold,'*.jpg'));
+imFol       = natsortfiles({imFol.name});
+sMax       = size(imFol,2);
+%     nmFoldRes  = ['../results/sequence/' nmFold];
+%     disp('Get Data.........');
+disp(fold);
+tp = 2;
+% for tp = 1: length(catTipe)-1
+%     mkdir(['../Result3/'  labelName{1} '/' '01_EP02_01f' '/' catTipe{tp} '/']);
+    for frame = 1: numel(imFol)-1
+        % % name file
+        nameFile1 = [fold imFol{com}];
+        nameFile2 = [fold imFol{frame+1}];
 
-                 
-            end
+        % % Load Image
+        img0 = imread(nameFile1);
+        img1 = imread(nameFile2);
+
+
+        if frame == 1
+             bbox = step(FD, img0);
         else
-            disp('Folder Tidak Ditemukan');
+             bbox = [bbox(1),bbox(2),bbox(3),bbox(4)];
         end
+
+        img0  = imcrop(img0, bbox);
+        img1  = imcrop(img1, bbox);
+
+        [input0, init0] = getLandmark(img0,refShape,[0,0,bbox(3),bbox(4)]);
+        [input1, init1] = getLandmark(img1,refShape,[0,0,bbox(3),bbox(4)]);
+
+        MaxIter=6;
+
+        if frame == 1 
+             points = Fitting(input0,init0,RegMat,MaxIter);
+        else
+             points = [points(:,1), points(:,2)];
+        end
+
+        [imgFeature0,bboxFeat0] = getFeaturesFace(points,input0,catTipe{tp});
+        [imgFeature1,bboxFeat1] = getFeaturesFace(points,input1,catTipe{tp});    
+
+        numCat = size(catTipe,2)-1;  
+
+        w = figure('Name', num2str(tipeFeat),'visible',is_show);
+        movegui(w,locFig{1});
+
+        header = {'Frame' ['Rx' tipeFeat] ['Ry' tipeFeat] ['R' tipeFeat] ['Teta' tipeFeat] ['Sum' tipeFeat] ['labelName' tipeFeat]};
+        sName{1,1} = tipeFeat;
+
+        [poc{frame},output{frame}]  = getPOC(imgFeature0, imgFeature1,block);
+        [Q1{frame},Q2{frame},Q3{frame},Q4{frame}]=getCoordinate(output{frame},block,frame);
+        quiv(frame,7:7) = {labelName{1}};
+
+%         save(['../Result3/' labelName{1} '/' '01_EP02_01f' '/' catTipe{tp} '/' 'output-' catTipe{tp} '.mat'  ],'output');
+
+%                     disp(['=========================' num2str(frame) '===============================']);
     end
-end
+
+    Q1 = transpose(Q1);
+    Q2 = transpose(Q2);
+    Q3 = transpose(Q3);
+    Q4 = transpose(Q4);
+
+    disp(['=========================' catTipe{tp} '===============================']);
+
+    save(['../Result/' labelName{1} '/' '01_EP02_01f' '/' catTipe{tp} '/' 'Q1.mat'  ],'Q1');
+    save(['../Result/' labelName{1} '/' '01_EP02_01f' '/' catTipe{tp} '/' 'Q2.mat'  ],'Q2');
+    save(['../Result/' labelName{1} '/' '01_EP02_01f' '/' catTipe{tp} '/' 'Q3.mat'  ],'Q3');
+    save(['../Result/' labelName{1} '/' '01_EP02_01f' '/' catTipe{tp} '/' 'Q4.mat'  ],'Q4'); 
+    
+% end
